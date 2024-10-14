@@ -1,8 +1,5 @@
 import Workshops from "../models/workshops.js"
 
-
-
-
 export const getWorkshops = async (req, res) => {
     try {
         const { limit } = req.query;

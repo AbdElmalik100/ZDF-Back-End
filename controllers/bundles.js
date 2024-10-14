@@ -3,7 +3,8 @@ import Bundles from "../models/bundles.js"
 
 export const getBundles = async (req, res) => {
     try {
-        const bundles = await Bundles.find().populate("workshops")
+        const {limit} = req.query
+        const bundles = await Bundles.find().populate("workshops").limit(limit)
         return res.status(200).json(bundles)
     } catch (error) {
         return res.status(500).json(error)
