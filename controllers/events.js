@@ -47,9 +47,7 @@ export const updateEvent = async (req, res) => {
         const event = await Events.findByIdAndUpdate(id, data, { new: true })
         if (!event) return res.status(404).json({ error: "event with this ID not found" })
         return res.status(200).json(event)
-    } catch (error) {
-        console.log(error);
-        
+    } catch (error) {        
         return res.status(500).json(error)
     }
 }

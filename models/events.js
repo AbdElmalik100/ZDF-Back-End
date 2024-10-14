@@ -41,10 +41,6 @@ const eventsSchema = new mongoose.Schema({
     is_available: {
         type: Boolean,
         default: true
-    },
-    qr_code: {
-        type: String,
-        default: ""
     }
 })
 

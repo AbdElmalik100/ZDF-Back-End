@@ -1,5 +1,5 @@
 import express from 'express'
-import { createSubscription, deleteSubscription, getSubscription, getSubscriptions, updateSubscription, updateUserAttendance } from '../controllers/subscriptions.js'
+import { createSubscription, deleteSubscription, getSubscription, getSubscriptions, updateSubscription } from '../controllers/subscriptions.js'
 
 const router = express.Router()
 
@@ -12,8 +12,5 @@ router.route("/:id")
     .get(getSubscription)
     .patch(updateSubscription)
     .delete(deleteSubscription)
-
-router.route("/:id/attendance")
-    .post(updateUserAttendance)
 
 export default router

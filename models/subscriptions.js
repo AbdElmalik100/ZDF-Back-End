@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import Events from './events.js'
 import Users from './users.js'
+import Workshops from "./workshops.js";
+import Bundles from "./bundles.js";
 
 
 const generateRandomNumber = () => {
@@ -25,19 +27,27 @@ const subscriptionsSchema = new mongoose.Schema({
     },
     event: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: Events
+        ref: Events,
+        default: null
+    },
+    workshop: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: Workshops,
+        default: null
+    },
+    bundle: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: Bundles,
+        default: null
     },
     user: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: Users
+        ref: Users,
+        required: true
     },
     amount: {
         type: String
     },
-    attendance: {
-        type: Boolean,
-        default: false
-    }
 })
 
 

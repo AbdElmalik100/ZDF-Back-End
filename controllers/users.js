@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 export const me = async (req, res) => {
     try {
         const userInfo = req.userInfo
-        const user = await Users.findOne({ email: userInfo.email, _id: userInfo.id }, {password: false})
+        const user = await Users.findOne({ email: userInfo.email, _id: userInfo.id }, { password: false })
         if (!user) return res.status(404).json({ error: "user not found" })
         return res.status(200).json(user)
     } catch (error) {
@@ -28,13 +28,11 @@ export const updateUser = async (req, res) => {
         const baseUrl = `${req.protocol}://${req.get('host')}`;
         const { id } = req.params
         const data = req.body
-        if(data.defaultAvatar) data.avatar = `${baseUrl}/uploads/defaults/${data.defaultAvatar}`
+        if (data.defaultAvatar) data.avatar = `${baseUrl}/uploads/defaults/${data.defaultAvatar}`
         const updatedUser = await Users.findByIdAndUpdate(id, data, { new: true })
         if (!updatedUser) return res.status(404).json({ error: "user with this ID not found" })
         return res.status(200).json(updatedUser)
     } catch (error) {
-        console.log(error);
-        
         return res.status(400).json(error)
     }
 }
@@ -52,8 +50,6 @@ export const updateProfilePicture = async (req, res) => {
         if (!updatedUser) return res.status(404).json({ error: "user with this ID not found" })
         return res.status(200).json(updatedUser)
     } catch (error) {
-        console.log(error);
-        
         return res.status(400).json(error)
     }
 }

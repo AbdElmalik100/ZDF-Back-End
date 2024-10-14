@@ -4,7 +4,10 @@ import mongoose from 'mongoose';
 import path, { dirname } from 'path';
 import usersRouter from './routes/users.js'
 import eventsRouter from './routes/events.js'
-import TheatresRouter from './routes/theatre.js'
+import theatresRouter from './routes/theatre.js'
+import workshopsRouter from './routes/workshops.js'
+import bundlesRouter from './routes/bundles.js'
+import attendanceRouter from './routes/attendance.js'
 import subscriptionsRouter from './routes/subscriptions.js'
 import { fileURLToPath } from 'url';
 import cors from 'cors'
@@ -44,18 +47,21 @@ mongoose.connect(mongooseUrl)
 
 app.use('/api/users', usersRouter)
 app.use('/api/events', eventsRouter)
-app.use('/api/theatres', TheatresRouter)
+app.use('/api/theatres', theatresRouter)
+app.use('/api/workshops', workshopsRouter)
+app.use('/api/bundles', bundlesRouter)
+app.use('/api/attendances', attendanceRouter)
 app.use('/api/subscriptions', subscriptionsRouter)
 
 
 io.on('connection', socket => {
     console.log('user has been connected: ', socket.id);
+    
     socket.on("seat_submit", seatData => {
         socket.broadcast.emit("recieve_seat", seatData)
     })
-
-    socket.on("event_attendance", userSubscriptionData => {
-        socket.broadcast.emit("recieve_event_attendance", userSubscriptionData)
+    socket.on("submit_attendance", userAttendanceData => {
+        socket.broadcast.emit("recieve_attendance", userAttendanceData)
     })
 
     socket.on("disconnect", () => {

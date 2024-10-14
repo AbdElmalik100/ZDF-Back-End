@@ -2,13 +2,16 @@ import Subscriptions from '../models/subscriptions.js'
 
 export const getSubscriptions = async (req, res) => {
     try {
-        const { event, user, amount, attendance, code, startDate, endDate } = req.query;
+        const { event, workshop, bundle, user, amount, attendance, code, startDate, endDate } = req.query;
         const query = {};
 
         if (event) query.event = event;
+        if (workshop) query.workshop = workshop;
+        if (bundle) query.bundle = bundle;
         if (user) query.user = user;
         if (amount) query.amount = amount;
         if (code) query.code = code;
+
 
         if (attendance !== undefined) {
             query.attendance = attendance === 'true';
@@ -22,6 +25,7 @@ export const getSubscriptions = async (req, res) => {
 
         const subscriptions = await Subscriptions.find(query).sort({ attendance: "desc" })
             .populate('event')
+            .populate("workshop")
             .populate('user');
 
         return res.status(200).json(subscriptions);
@@ -57,6 +61,7 @@ export const updateSubscription = async (req, res) => {
         const data = req.body
         const subscriptions = await Subscriptions.findByIdAndUpdate(id, data, { new: true })
             .populate("event")
+            .populate("workshop")
             .populate("user")
         if (!subscriptions) return res.status(404).json({ error: "Subscription with this ID not found" })
         return res.status(200).json(subscriptions)
@@ -72,27 +77,5 @@ export const deleteSubscription = async (req, res) => {
         return res.status(200).json(subscriptions)
     } catch (error) {
         res.status(500).json(error)
-    }
-}
-
-
-export const updateUserAttendance = async (req, res) => {
-    try {
-        const { id } = req.params
-        const user = req.body
-
-        const userSubscription = await Subscriptions.find({ user: user._id, event: id })
-
-        if (userSubscription[0].attendance) return res.status(400).json({ error: "Your have already submitted your attendance" })
-        userSubscription[0].attendance = true
-
-        const updatedSubscription = await Subscriptions.findByIdAndUpdate(userSubscription[0]._id, userSubscription[0], { new: true })
-            .populate("event")
-            .populate("user")
-        return res.status(200).json({ message: "You have submitted your attendance", updatedSubscription })
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json(error)
     }
 }

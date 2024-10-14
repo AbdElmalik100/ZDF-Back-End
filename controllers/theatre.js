@@ -2,7 +2,7 @@ import Theatre from "../models/theatre.js";
 
 export const getTheatres = async (req, res) => {
     try {
-        const theatres = await Theatre.find().populate("event")
+        const theatres = await Theatre.find().sort({created_at: "desc"}).populate("event")
         return res.status(200).json(theatres)
     } catch (error) {
         return res.status(500).json(error)
@@ -70,8 +70,6 @@ export const updateUserSeat = async (req, res) => {
         await Theatre.findByIdAndUpdate(id, theatres, { new: true })
         return res.status(200).json({ message: "Your seat number has been submitted", theatres })
     } catch (error) {
-        console.log(error);
-
         return res.status(500).json(error)
     }
 }
@@ -89,7 +87,6 @@ export const checkUserSeat = async (req, res) => {
         }
         return res.status(204).json({ message: "This user didn't submit yet" })
     } catch (error) {
-        console.log(error);
         return res.status(500).json(error)
     }
 }
