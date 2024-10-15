@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 export const me = async (req, res) => {
     try {
         const userInfo = req.userInfo
-        const user = await Users.findOne({ email: userInfo.email, _id: userInfo.id }, { password: false })
+        const user = await Users.findOne({ email: userInfo.email.toLowerCase(), _id: userInfo.id }, { password: false })
         if (!user) return res.status(404).json({ error: "user not found" })
         return res.status(200).json(user)
     } catch (error) {
@@ -68,20 +68,20 @@ export const googleOAuth = async (req, res) => {
         })
         data = await response.json()
 
-        existUser = await Users.findOne({ email: data.email })
+        existUser = await Users.findOne({ email: data.email.toLowerCase() })
     } else if (credentials !== '') {
         data = jwt.decode(credentials)
-        existUser = await Users.findOne({ email: data.email })
+        existUser = await Users.findOne({ email: data.email.toLowerCase() })
     }
 
     if (existUser) {
-        const token = jwt.sign({ id: existUser._id, email: existUser.email }, process.env.JWT_SECRET, { expiresIn: "1h" })
+        const token = jwt.sign({ id: existUser._id, email: existUser.email.toLowerCase() }, process.env.JWT_SECRET, { expiresIn: "1h" })
         return res.status(200).json({ user: existUser, token })
     } else {
         const newUser = new Users({
             first_name: data.given_name,
             last_name: data.family_name,
-            email: data.email,
+            email: data.email.toLowerCase(),
             avatar: data.picture,
             is_email_verified: data.email_verified
         })
