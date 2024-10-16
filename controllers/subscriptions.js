@@ -26,6 +26,7 @@ export const getSubscriptions = async (req, res) => {
         const subscriptions = await Subscriptions.find(query).sort({ attendance: "desc" })
             .populate('event')
             .populate("workshop")
+            .populate("bundle")
             .populate('user');
 
         return res.status(200).json(subscriptions);
@@ -62,6 +63,7 @@ export const updateSubscription = async (req, res) => {
         const subscriptions = await Subscriptions.findByIdAndUpdate(id, data, { new: true })
             .populate("event")
             .populate("workshop")
+            .populate("bundle")
             .populate("user")
         if (!subscriptions) return res.status(404).json({ error: "Subscription with this ID not found" })
         return res.status(200).json(subscriptions)
