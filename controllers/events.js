@@ -12,7 +12,8 @@ export const getEvents = async (req, res) => {
 }
 export const createEvent = async (req, res) => {
     try {
-        const baseUrl = `${req.protocol}://${req.get("host")}`
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+        const baseUrl = `${protocol}://${req.get("host")}`
         const data = req.body
         if (req.file) data.image = `${baseUrl}/uploads/${req.file.filename}`
         data.sessions = data.sessions.split(",")
@@ -37,7 +38,8 @@ export const getEvent = async (req, res) => {
 }
 export const updateEvent = async (req, res) => {    
     try {
-        const baseUrl = `${req.protocol}://${req.get("host")}`
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+        const baseUrl = `${protocol}://${req.get("host")}`
         const { id } = req.params
         const data = req.body
 

@@ -12,7 +12,8 @@ export const getBundles = async (req, res) => {
 }
 export const createBundle = async (req, res) => {
     try {
-        const baseUrl = `${req.protocol}://${req.get("host")}`
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+        const baseUrl = `${protocol}://${req.get("host")}`
         const data = req.body
         const file = req.file
 
@@ -39,7 +40,8 @@ export const getBundle = async (req, res) => {
 }
 export const updateBundle = async (req, res) => {
     try {
-        const baseUrl = `${req.protocol}://${req.get("host")}`
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+        const baseUrl = `${protocol}://${req.get("host")}`
         const { id } = req.params
         const data = req.body
         const file = req.file

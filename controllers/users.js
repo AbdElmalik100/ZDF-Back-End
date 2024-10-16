@@ -25,7 +25,8 @@ export const getAllUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        const baseUrl = `${req.protocol}://${req.get('host')}`;
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+        const baseUrl = `${protocol}://${req.get("host")}`
         const { id } = req.params
         const data = req.body
         if (data.defaultAvatar) data.avatar = `${baseUrl}/uploads/defaults/${data.defaultAvatar}`
@@ -39,7 +40,8 @@ export const updateUser = async (req, res) => {
 
 export const updateProfilePicture = async (req, res) => {
     try {
-        const baseUrl = `${req.protocol}://${req.get('host')}`;
+        const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+        const baseUrl = `${protocol}://${req.get("host")}`
         const { id } = req.params
         const file = req.file
         const data = {
