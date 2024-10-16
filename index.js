@@ -23,7 +23,7 @@ const app = express()
 const server = createServer(app)
 export const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:3000', 'http://localhost:3001']
+        origin: ['http://localhost:3000', 'http://localhost:3001', 'zdf-eg.com', 'admindashboard.zdf-eg.com']
     }
 })
 
@@ -56,7 +56,7 @@ app.use('/api/subscriptions', subscriptionsRouter)
 
 io.on('connection', socket => {
     console.log('user has been connected: ', socket.id);
-    
+
     socket.on("seat_submit", seatData => {
         socket.broadcast.emit("recieve_seat", seatData)
     })
