@@ -42,7 +42,11 @@ const workshopsSchema = new mongoose.Schema({
     },
     price: {
         type: String,
-    }
+    },
+    is_available: {
+        type: Boolean,
+        default: true
+    },
 })
 
 
