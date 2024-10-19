@@ -16,7 +16,7 @@ export const me = async (req, res) => {
 
 export const getAllUser = async (req, res) => {
     try {
-        const users = await Users.find({}, { password: false }).populate('posts')
+        const users = await Users.find({}, { password: false })
         return res.status(200).json(users)
     } catch (error) {
         return res.status(404).json(error)
