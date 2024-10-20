@@ -35,13 +35,13 @@ export const createAttendance = async (req, res) => {
             })
             data.users = users
         } else if (data.workshop) {
-            const workshopSubscriptions = await Subscriptions.find({ event: data.workshop }).populate("user", { password: false })
+            const workshopSubscriptions = await Subscriptions.find({ workshop: data.workshop }).populate("user", { password: false })
             workshopSubscriptions.forEach(el => {
                 users.push({ ...el.user.toObject(), attendance: false, code: el.code })
             })
             data.users = users
         } else if (data.bundle) {
-            const bundleSubscriptions = await Subscriptions.find({ event: data.bundle }).populate("user", { password: false })
+            const bundleSubscriptions = await Subscriptions.find({ bundle: data.bundle }).populate("user", { password: false })
             bundleSubscriptions.forEach(el => {
                 users.push({ ...el.user.toObject(), attendance: false, code: el.code })
             })
