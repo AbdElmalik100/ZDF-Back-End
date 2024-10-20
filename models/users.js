@@ -31,10 +31,34 @@ const usersSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    education: {
+        type: String,
+        default: ""
+    },
+    school: {
+        type: String,
+        default: ""
+    },
     phone_number: {
         type: String,
         default: ""
-    }
+    },
+    address: {
+        type: String,
+        default: ""
+    },
+    country: {
+        type: String,
+        default: ""
+    },
+    city: {
+        type: String,
+        default: ""
+    },
+    zip_code: {
+        type: String,
+        default: ""
+    },
 })
 
 
