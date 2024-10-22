@@ -28,6 +28,10 @@ const bundlesSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    limit: {
+        type: String,
+        default: "0"
+    }
 })
 
 

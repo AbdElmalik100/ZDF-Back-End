@@ -11,13 +11,13 @@ const workshopsSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        trim: true,      
-        lowercase: true,      
+        trim: true,
+        lowercase: true,
     },
     description: {
         type: String,
-        trim: true,      
-        lowercase: true,      
+        trim: true,
+        lowercase: true,
     },
     lecturer: {
         type: String,
@@ -47,6 +47,10 @@ const workshopsSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    limit: {
+        type: String,
+        default: "0"
+    }
 })
 
 
